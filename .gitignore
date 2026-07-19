@@ -1,0 +1,13 @@
+/_site/
+/.quarto/
+/_freeze/
+/.cache/
+/.local/
+/.uv-cache/
+/.jupyter_cache/
+/.venv/
+/.Rproj.user/
+.Rhistory
+.RData
+
+**/*.quarto_ipynb
