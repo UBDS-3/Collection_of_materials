@@ -1,0 +1,33 @@
+---
+title: "Example course slides"
+author: "Course team"
+format:
+  revealjs:
+    slide-number: true
+    incremental: true
+  pptx:
+    incremental: true
+  beamer:
+    pdf-engine: xelatex
+---
+
+## One source, three outputs
+
+- Browser-based Reveal.js presentation
+- Downloadable PowerPoint deck
+- Downloadable PDF presentation
+
+## A simple result
+
+For the observations $2, 4, 6, 8$:
+
+$$
+\bar{x} = \frac{2 + 4 + 6 + 8}{4} = 5.
+$$
+
+## Authoring guidance
+
+- Separate slides with level-two headings
+- Prefer portable Markdown constructs
+- Preview all three formats before publishing
+

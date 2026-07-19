@@ -1,0 +1,17 @@
+---
+title: "R Markdown example"
+author: "Course team"
+date: "`r format(Sys.Date())`"
+---
+
+## A page written in R Markdown
+
+This file is rendered by Quarto as part of the same website.
+
+```{r}
+values <- c(2, 4, 6, 8)
+mean(values)
+```
+
+R Markdown is useful when existing teaching materials already use `knitr`.
+

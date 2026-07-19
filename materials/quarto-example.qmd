@@ -1,0 +1,25 @@
+---
+title: "Quarto example"
+author: "Course team"
+date: today
+---
+
+## A reproducible lesson page
+
+Quarto combines narrative, equations, figures, and executable code. For
+example, the sample mean is
+
+$$
+\bar{x} = \frac{1}{n}\sum_{i=1}^{n}x_i.
+$$
+
+```{python}
+#| echo: true
+#| eval: false
+values = [2, 4, 6, 8]
+sum(values) / len(values)
+```
+
+The cell is shown but not executed, so this starter site has no Python package
+dependency.
+
