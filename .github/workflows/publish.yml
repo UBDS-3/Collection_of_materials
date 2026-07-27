@@ -45,6 +45,9 @@ jobs:
         with:
           tinytex: true
 
+      - name: Generate navigation from content folders
+        run: python scripts/generate-navigation.py
+
       - name: Render website and document formats
         uses: quarto-dev/quarto-actions/render@v2
 

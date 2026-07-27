@@ -1,44 +1,61 @@
 project:
   type: website
   output-dir: _site
+  # Folder globs discover every supported source recursively while avoiding
+  # project documentation such as README.md and SITE_CUSTOMIZATION.md.
   render:
     - index.qmd
-    - materials/quarto-example.qmd
-    - materials/rmarkdown-example.Rmd
-    - materials/notebook-example.ipynb
-    - materials/live-code.qmd
-    - slides/course-slides.qmd
+    - "materials/**/*.qmd"
+    - "materials/**/*.Rmd"
+    - "materials/**/*.rmd"
+    - "materials/**/*.ipynb"
+    - "slides/**/*.qmd"
+    - "slides/**/*.Rmd"
+    - "slides/**/*.rmd"
+    - "slides/**/*.ipynb"
 
 website:
   title: "Collection of materials"
   repo-url: https://github.com/UBDS-3/Collection_of_materials
   repo-actions: [edit, issue]
+
+  # SITE NAVIGATION
+  # Do not edit the generated block by hand. Configure it in
+  # site-navigation.toml, then run scripts/generate-navigation.py.
   navbar:
+    pinned: true
+    search: true
     left:
-      - href: index.qmd
-        text: Home
-      - text: Materials
+      # BEGIN AUTO-GENERATED NAVIGATION
+      - href: "index.qmd"
+        text: "Home"
+      - text: "Materials"
         menu:
-          - href: materials/quarto-example.qmd
-            text: Quarto example
-          - href: materials/rmarkdown-example.Rmd
-            text: R Markdown example
-          - href: materials/notebook-example.ipynb
-            text: Jupyter example
-          - href: materials/live-code.qmd
-            text: Run code in browser
-      - href: slides/course-slides.html
-        text: Slides
+          - href: "materials/notebook-example.ipynb"
+            text: "Jupyter notebook example"
+          - href: "materials/quarto-example.qmd"
+            text: "Quarto example"
+          - href: "materials/rmarkdown-example.Rmd"
+            text: "R Markdown example"
+          - href: "materials/live-code.qmd"
+            text: "Run code in your browser"
+      - text: "Slides"
+        menu:
+          - href: "slides/course-slides.qmd"
+            text: "Example course slides"
+      # END AUTO-GENERATED NAVIGATION
     right:
       - icon: github
         href: https://github.com/UBDS-3/Collection_of_materials
         aria-label: GitHub
   page-footer:
     left: "Built with Quarto and GitHub Pages"
+    right: "Navigation generated from content folders"
 
 format:
   html:
     theme: cosmo
+    css: styles.css
     toc: true
     code-copy: true
     code-fold: show

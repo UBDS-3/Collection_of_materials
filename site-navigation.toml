@@ -1,0 +1,20 @@
+# This is the only file you need to edit to control dynamic navigation.
+home_label = "Home"
+home_href = "index.qmd"
+
+# Each section becomes a top-navbar dropdown. Add, remove, or reorder sections.
+[[section]]
+label = "Materials"
+folder = "materials"
+recursive = true
+sort = "title"       # "title", "filename", or "modified"
+extensions = [".qmd", ".Rmd", ".rmd", ".ipynb"]
+exclude = []
+
+[[section]]
+label = "Slides"
+folder = "slides"
+recursive = true
+sort = "title"
+extensions = [".qmd", ".Rmd", ".rmd", ".ipynb"]
+exclude = []

@@ -1,0 +1,97 @@
+/*
+ * SITE DESIGN CONTROLS
+ * Change the values in this first block to restyle the whole website.
+ * Detailed guidance is in SITE_CUSTOMIZATION.md.
+ */
+:root {
+  --site-primary: #315c8c;
+  --site-primary-dark: #234365;
+  --site-accent: #e8f1f8;
+  --site-surface: #ffffff;
+  --site-text: #243142;
+  --site-muted: #617084;
+  --site-border: #dce4ec;
+
+  --site-font: system-ui, -apple-system, "Segoe UI", sans-serif;
+  --site-heading-font: var(--site-font);
+
+  --site-content-width: 1180px;
+  --site-radius: 0.7rem;
+  --site-shadow: 0 0.25rem 1rem rgb(31 51 73 / 8%);
+}
+
+/* Typography */
+body {
+  color: var(--site-text);
+  font-family: var(--site-font);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--site-primary-dark);
+  font-family: var(--site-heading-font);
+}
+
+.page-columns {
+  max-width: var(--site-content-width);
+}
+
+/* Top navigation */
+.navbar {
+  background: var(--site-primary);
+  box-shadow: 0 1px 0 rgb(0 0 0 / 8%);
+}
+
+.navbar .navbar-brand,
+.navbar .nav-link {
+  color: #fff;
+}
+
+.navbar .nav-link:hover,
+.navbar .nav-link:focus,
+.navbar .nav-link.active {
+  color: #fff;
+  text-decoration: underline;
+  text-underline-offset: 0.3rem;
+}
+
+/* Reusable content card: ::: {.site-card} ... ::: */
+.site-card {
+  height: 100%;
+  padding: 1.25rem;
+  background: var(--site-surface);
+  border: 1px solid var(--site-border);
+  border-radius: var(--site-radius);
+  box-shadow: var(--site-shadow);
+}
+
+.site-card > :last-child {
+  margin-bottom: 0;
+}
+
+/* Reusable highlighted panel: ::: {.site-highlight} ... ::: */
+.site-highlight {
+  margin-block: 1.5rem;
+  padding: 1.25rem 1.5rem;
+  background: var(--site-accent);
+  border-left: 0.3rem solid var(--site-primary);
+  border-radius: var(--site-radius);
+}
+
+/* Interactive code cells */
+.exercise-cell {
+  overflow: hidden;
+  border: 1px solid var(--site-border);
+  border-radius: var(--site-radius);
+}
+
+/* Remove this media block if you want identical desktop/mobile spacing. */
+@media (max-width: 768px) {
+  :root {
+    --site-radius: 0.45rem;
+  }
+
+  .site-card,
+  .site-highlight {
+    padding: 1rem;
+  }
+}

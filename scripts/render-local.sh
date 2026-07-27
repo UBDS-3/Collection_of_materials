@@ -12,14 +12,17 @@ if [[ ! -x .venv/bin/python ]]; then
 fi
 
 mkdir -p .cache/ipython .cache/jupyter .cache/matplotlib \
-  .local/share/quarto/logs .tmp/jupyter-runtime
+  .local/share/quarto/logs .tmp/jupyter-runtime .tmp/runtime
 
 export XDG_CACHE_HOME="$PROJECT_DIR/.cache"
 export XDG_DATA_HOME="$PROJECT_DIR/.local/share"
+export XDG_RUNTIME_DIR="$PROJECT_DIR/.tmp/runtime"
 export IPYTHONDIR="$PROJECT_DIR/.cache/ipython"
 export JUPYTER_CONFIG_DIR="$PROJECT_DIR/.cache/jupyter"
 export JUPYTER_RUNTIME_DIR="$PROJECT_DIR/.tmp/jupyter-runtime"
 export MPLCONFIGDIR="$PROJECT_DIR/.cache/matplotlib"
 export QUARTO_PYTHON="$PROJECT_DIR/.venv/bin/python"
+
+.venv/bin/python scripts/generate-navigation.py
 
 exec quarto render "$@"

@@ -16,8 +16,13 @@ exercises using Pyodide and WebR.
 └── .github/workflows/publish.yml
 ```
 
-Add teaching content below `materials/` and slides below `slides/`, then add
-the page to the navbar or sidebar in `_quarto.yml`.
+Add teaching content below `materials/` and slides below `slides/`. Supported
+documents are rendered automatically, and their titles are added to generated
+navbar dropdowns. Configure folder sections and sorting in
+`site-navigation.toml`.
+
+For navigation, layout, colors, fonts, and reusable card styles, see
+[`SITE_CUSTOMIZATION.md`](SITE_CUSTOMIZATION.md).
 
 ## Render locally
 
