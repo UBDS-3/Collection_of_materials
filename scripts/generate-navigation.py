@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import html
 import json
 import re
 import sys
@@ -45,6 +46,21 @@ def text_metadata(path: Path) -> tuple[str | None, bool]:
     return title, hidden
 
 
+def html_metadata(path: Path) -> tuple[str | None, bool]:
+    """Read a title from a pre-rendered HTML file without parsing its assets."""
+    try:
+        contents = path.read_text(encoding="utf-8", errors="replace")
+    except OSError:
+        return None, False
+    match = re.search(r"(?is)<title[^>]*>\s*(.*?)\s*</title>", contents)
+    if not match:
+        match = re.search(r"(?is)<h1[^>]*>\s*(.*?)\s*</h1>", contents)
+    if not match:
+        return None, False
+    title = re.sub(r"<[^>]+>", "", match.group(1))
+    return html.unescape(title).strip(), False
+
+
 def notebook_metadata(path: Path) -> tuple[str | None, bool]:
     try:
         notebook = json.loads(path.read_text(encoding="utf-8"))
@@ -70,6 +86,10 @@ def notebook_metadata(path: Path) -> tuple[str | None, bool]:
 def display_title(path: Path) -> tuple[str, bool]:
     if path.suffix == ".ipynb":
         title, hidden = notebook_metadata(path)
+    elif path.suffix.lower() == ".html":
+        title, hidden = html_metadata(path)
+    elif path.suffix.lower() == ".pdf":
+        title, hidden = None, False
     else:
         title, hidden = text_metadata(path)
     fallback = path.stem.replace("-", " ").replace("_", " ").strip().title()
@@ -98,6 +118,7 @@ def section_files(section: dict) -> list[tuple[Path, str]]:
         ):
             continue
         title, hidden = display_title(path)
+        title = section.get("titles", {}).get(relative_to_folder, title)
         if not hidden:
             entries.append((path, title))
 
@@ -128,6 +149,8 @@ def build_navigation(config: dict) -> str:
         lines.append("        menu:")
         for path, title in entries:
             href = path.relative_to(ROOT).as_posix()
+            if section.get("show_format", False) and path.suffix.lower() in {".html", ".pdf"}:
+                title = f"{title} ({path.suffix[1:].upper()})"
             lines.append(f"          - href: {yaml_string(href)}")
             lines.append(f"            text: {yaml_string(title)}")
 

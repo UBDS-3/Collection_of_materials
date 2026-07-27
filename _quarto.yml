@@ -13,6 +13,14 @@ project:
     - "slides/**/*.Rmd"
     - "slides/**/*.rmd"
     - "slides/**/*.ipynb"
+  # Static documents are not rendered by Quarto; they are copied unchanged.
+  resources:
+    - "materials/**/*.html"
+    - "materials/**/*.pdf"
+    - "materials/**/*_files/**"
+    - "slides/**/*.html"
+    - "slides/**/*.pdf"
+    - "slides/**/*_files/**"
 
 website:
   title: "Collection of materials"
@@ -39,10 +47,16 @@ website:
             text: "R Markdown example"
           - href: "materials/live-code.qmd"
             text: "Run code in your browser"
+          - href: "materials/tidy-data.html"
+            text: "Tidy Data (HTML)"
       - text: "Slides"
         menu:
+          - href: "slides/slides.pdf"
+            text: "BashLand Course (PDF)"
           - href: "slides/course-slides.qmd"
             text: "Example course slides"
+          - href: "slides/260713-BDS3_intro_to_modern_bio_data_Helena_Crowell.pdf"
+            text: "Introduction to Modern Biological Data — Helena Crowell (PDF)"
       # END AUTO-GENERATED NAVIGATION
     right:
       - icon: github

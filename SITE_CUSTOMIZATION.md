@@ -32,13 +32,28 @@ label = "Lectures"
 folder = "lectures"
 recursive = true
 sort = "title"
-extensions = [".qmd", ".Rmd", ".rmd", ".ipynb"]
+extensions = [".qmd", ".Rmd", ".rmd", ".ipynb", ".html", ".pdf"]
+show_format = true
 exclude = []
+
+[section.titles]
+"technical-filename.pdf" = "Human-friendly title"
 ```
 
 The displayed link name comes from the document's YAML `title`. For notebooks,
 the generator checks `metadata.quarto.title`, then the first Markdown level-one
-heading, and finally uses a cleaned-up filename.
+heading. For static HTML it reads the HTML `<title>`. PDFs and files without
+embedded titles use a cleaned-up filename. Set `show_format = true` to append
+`(HTML)` or `(PDF)` to static document links.
+
+Use the optional `[section.titles]` table to override a generated name without
+renaming the file. Paths in that table are relative to the section folder.
+
+Quarto renders `.qmd`, `.Rmd`, and `.ipynb` sources. Existing `.html` and `.pdf`
+files are copied unchanged through `project.resources`, so their internal
+formatting remains intact. If an HTML export has a companion directory such as
+`lesson_files/`, keep it beside the HTML file; the `*_files` resource pattern
+copies it too.
 
 To keep a document rendered but hide it from navigation, add this to its YAML:
 

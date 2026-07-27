@@ -8,13 +8,22 @@ label = "Materials"
 folder = "materials"
 recursive = true
 sort = "title"       # "title", "filename", or "modified"
-extensions = [".qmd", ".Rmd", ".rmd", ".ipynb"]
+extensions = [".qmd", ".Rmd", ".rmd", ".ipynb", ".html", ".pdf"]
+show_format = true
 exclude = []
+
+[section.titles]
+"tidy-data.html" = "Tidy Data"
 
 [[section]]
 label = "Slides"
 folder = "slides"
 recursive = true
 sort = "title"
-extensions = [".qmd", ".Rmd", ".rmd", ".ipynb"]
+extensions = [".qmd", ".Rmd", ".rmd", ".ipynb", ".html", ".pdf"]
+show_format = true
 exclude = []
+
+[section.titles]
+"260713-BDS3_intro_to_modern_bio_data_Helena_Crowell.pdf" = "Introduction to Modern Biological Data — Helena Crowell"
+"slides.pdf" = "BashLand Course"

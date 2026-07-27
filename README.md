@@ -21,6 +21,9 @@ documents are rendered automatically, and their titles are added to generated
 navbar dropdowns. Configure folder sections and sorting in
 `site-navigation.toml`.
 
+Pre-rendered HTML pages and PDF documents are also discovered, copied unchanged
+to the published site, and linked from the appropriate dropdown.
+
 For navigation, layout, colors, fonts, and reusable card styles, see
 [`SITE_CUSTOMIZATION.md`](SITE_CUSTOMIZATION.md).
 
