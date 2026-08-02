@@ -84,6 +84,22 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: var(--site-radius);
 }
 
+/* Inline viewers generated for uploaded HTML and PDF documents. */
+.embedded-document {
+  display: block;
+  width: 100%;
+  min-height: 78vh;
+  margin-top: 1rem;
+  background: #fff;
+  border: 1px solid var(--site-border);
+  border-radius: var(--site-radius);
+  box-shadow: var(--site-shadow);
+}
+
+.embedded-pdf {
+  min-height: 82vh;
+}
+
 /* Remove this media block if you want identical desktop/mobile spacing. */
 @media (max-width: 768px) {
   :root {

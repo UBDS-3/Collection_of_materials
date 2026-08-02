@@ -267,6 +267,7 @@ dependencies = [
     { name = "nbclient" },
     { name = "numpy" },
     { name = "pandas" },
+    { name = "pyyaml" },
 ]
 
 [package.metadata]
@@ -277,6 +278,7 @@ requires-dist = [
     { name = "nbclient", specifier = ">=0.10,<1" },
     { name = "numpy", specifier = ">=1.26,<2" },
     { name = "pandas", specifier = ">=2.1,<3" },
+    { name = "pyyaml", specifier = ">=6,<7" },
 ]
 
 [[package]]

@@ -1,14 +1,14 @@
-# This is the only file you need to edit to control dynamic navigation.
+# Each section below becomes a top-level navbar tab with a dropdown.
+# Every folder may mix QMD, Rmd, IPYNB, HTML, PDF, and PowerPoint files.
 home_label = "Home"
 home_href = "index.qmd"
 
-# Each section becomes a top-navbar dropdown. Add, remove, or reorder sections.
 [[section]]
-label = "Materials"
-folder = "materials"
+label = "R basics"
+folder = "content/r-basic"
 recursive = true
-sort = "title"       # "title", "filename", or "modified"
-extensions = [".qmd", ".Rmd", ".rmd", ".ipynb", ".html", ".pdf"]
+sort = "title"
+extensions = [".qmd", ".Rmd", ".rmd", ".ipynb", ".html", ".pdf", ".pptx"]
 show_format = true
 exclude = []
 
@@ -16,14 +16,50 @@ exclude = []
 "tidy-data.html" = "Tidy Data"
 
 [[section]]
-label = "Slides"
-folder = "slides"
+label = "Python basics"
+folder = "content/python-basic"
 recursive = true
 sort = "title"
-extensions = [".qmd", ".Rmd", ".rmd", ".ipynb", ".html", ".pdf"]
+extensions = [".qmd", ".Rmd", ".rmd", ".ipynb", ".html", ".pdf", ".pptx"]
+show_format = true
+exclude = []
+
+[[section]]
+label = "Advanced"
+folder = "content/advanced"
+recursive = true
+sort = "title"
+extensions = [".qmd", ".Rmd", ".rmd", ".ipynb", ".html", ".pdf", ".pptx"]
+show_format = true
+exclude = []
+
+[[section]]
+label = "Lectures"
+folder = "content/lectures"
+recursive = true
+sort = "title"
+extensions = [".qmd", ".Rmd", ".rmd", ".ipynb", ".html", ".pdf", ".pptx"]
 show_format = true
 exclude = []
 
 [section.titles]
 "260713-BDS3_intro_to_modern_bio_data_Helena_Crowell.pdf" = "Introduction to Modern Biological Data — Helena Crowell"
 "slides.pdf" = "BashLand Course"
+
+[[section]]
+label = "Research highlights"
+folder = "content/research-highlights"
+recursive = true
+sort = "title"
+extensions = [".qmd", ".Rmd", ".rmd", ".ipynb", ".html", ".pdf", ".pptx"]
+show_format = true
+exclude = []
+
+[[section]]
+label = "Post-school materials"
+folder = "content/post-school-materials"
+recursive = true
+sort = "title"
+extensions = [".qmd", ".Rmd", ".rmd", ".ipynb", ".html", ".pdf", ".pptx"]
+show_format = true
+exclude = []

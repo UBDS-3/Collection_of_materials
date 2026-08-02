@@ -5,22 +5,19 @@ project:
   # project documentation such as README.md and SITE_CUSTOMIZATION.md.
   render:
     - index.qmd
-    - "materials/**/*.qmd"
-    - "materials/**/*.Rmd"
-    - "materials/**/*.rmd"
-    - "materials/**/*.ipynb"
-    - "slides/**/*.qmd"
-    - "slides/**/*.Rmd"
-    - "slides/**/*.rmd"
-    - "slides/**/*.ipynb"
-  # Static documents are not rendered by Quarto; they are copied unchanged.
+    - "content/**/*.qmd"
+    - "content/**/*.Rmd"
+    - "content/**/*.rmd"
+    - "content/**/*.ipynb"
+    - "generated-pages/**/*.qmd"
+    - "generated-live/**/*.qmd"
+  # Static documents are copied unchanged and displayed through generated QMD
+  # wrapper pages. Do not edit generated-pages/ by hand.
   resources:
-    - "materials/**/*.html"
-    - "materials/**/*.pdf"
-    - "materials/**/*_files/**"
-    - "slides/**/*.html"
-    - "slides/**/*.pdf"
-    - "slides/**/*_files/**"
+    - "content/**/*.html"
+    - "content/**/*.pdf"
+    - "content/**/*.pptx"
+    - "content/**/*_files/**"
 
 website:
   title: "Collection of materials"
@@ -37,26 +34,38 @@ website:
       # BEGIN AUTO-GENERATED NAVIGATION
       - href: "index.qmd"
         text: "Home"
-      - text: "Materials"
+      - text: "R basics"
         menu:
-          - href: "materials/notebook-example.ipynb"
-            text: "Jupyter notebook example"
-          - href: "materials/quarto-example.qmd"
-            text: "Quarto example"
-          - href: "materials/rmarkdown-example.Rmd"
+          - href: "generated-live/content/r-basic/rmarkdown-example.qmd"
             text: "R Markdown example"
-          - href: "materials/live-code.qmd"
-            text: "Run code in your browser"
-          - href: "materials/tidy-data.html"
+          - href: "generated-pages/content/r-basic/tidy-data-html.qmd"
             text: "Tidy Data (HTML)"
-      - text: "Slides"
+      - text: "Python basics"
         menu:
-          - href: "slides/slides.pdf"
+          - href: "generated-live/content/python-basic/notebook-example.qmd"
+            text: "Jupyter notebook example"
+          - href: "generated-live/content/python-basic/quarto-example.qmd"
+            text: "Quarto example"
+      - text: "Advanced"
+        menu:
+          - href: "content/advanced/live-code.qmd"
+            text: "Run code in your browser"
+      - text: "Lectures"
+        menu:
+          - href: "generated-pages/content/lectures/slides-pdf.qmd"
             text: "BashLand Course (PDF)"
-          - href: "slides/course-slides.qmd"
+          - href: "content/lectures/course-slides.qmd"
             text: "Example course slides"
-          - href: "slides/260713-BDS3_intro_to_modern_bio_data_Helena_Crowell.pdf"
+          - href: "generated-pages/content/lectures/260713-BDS3_intro_to_modern_bio_data_Helena_Crowell-pdf.qmd"
             text: "Introduction to Modern Biological Data — Helena Crowell (PDF)"
+      - text: "Research highlights"
+        menu:
+          - href: "content/research-highlights/index.qmd"
+            text: "Research highlights overview"
+      - text: "Post-school materials"
+        menu:
+          - href: "content/post-school-materials/index.qmd"
+            text: "Post-school materials overview"
       # END AUTO-GENERATED NAVIGATION
     right:
       - icon: github

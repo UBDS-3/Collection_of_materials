@@ -1,0 +1,6 @@
+---
+title: "Post-school materials overview"
+---
+
+Post-school resources will be added here. New supported files placed in this
+folder appear automatically in the **Post-school materials** dropdown.

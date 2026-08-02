@@ -31,37 +31,47 @@ values <- c(2, 4, 6, 8)
 mean(values)
 ```
 
-## Materials
+## Learning areas
 
 ::: {.grid}
 ::: {.g-col-12 .g-col-md-4}
-### Quarto
+### R basics
 
-[Open the `.qmd` example](materials/quarto-example.qmd)
+Core R syntax, tidy data, and introductory analysis.
 :::
 
 ::: {.g-col-12 .g-col-md-4}
-### R Markdown
+### Python basics
 
-[Open the `.Rmd` example](materials/rmarkdown-example.Rmd)
+Python notebooks, pandas, visualization, and reproducible analysis.
 :::
 
 ::: {.g-col-12 .g-col-md-4}
-### Jupyter
+### Advanced
 
-[Open the `.ipynb` example](materials/notebook-example.ipynb)
+Interactive exercises and advanced computational topics.
+:::
+
+::: {.g-col-12 .g-col-md-4}
+### Lectures
+
+Lecture notes, browser presentations, PDFs, and PowerPoint decks.
+:::
+
+::: {.g-col-12 .g-col-md-4}
+### Research highlights
+
+Selected projects, research examples, and analytical case studies.
+:::
+
+::: {.g-col-12 .g-col-md-4}
+### Post-school materials
+
+References and resources for continued learning after the school.
 :::
 :::
-
-## Slides
-
-The example presentation is generated from one `.qmd` source:
-
-- [View slides in the browser](slides/course-slides.html)
-- [Download PDF slides](slides/course-slides.pdf)
-- [Download PowerPoint slides](slides/course-slides.pptx)
 
 ## Interactive exercises
 
-[Open the browser-executable Python and R examples](materials/live-code.qmd).
+[Open the browser-executable Python and R examples](content/advanced/live-code.qmd).
 These cells run locally in the reader's browser; no Python/R server is needed.

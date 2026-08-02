@@ -1,0 +1,6 @@
+---
+title: "Research highlights overview"
+---
+
+Research highlights will be added here. New supported files placed in this
+folder appear automatically in the **Research highlights** dropdown.

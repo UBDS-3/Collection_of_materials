@@ -45,6 +45,9 @@ jobs:
         with:
           tinytex: true
 
+      - name: Generate browser-executable pages
+        run: python scripts/generate-live-pages.py
+
       - name: Generate navigation from content folders
         run: python scripts/generate-navigation.py
 

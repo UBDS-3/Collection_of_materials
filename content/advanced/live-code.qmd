@@ -3,10 +3,10 @@ title: "Run code in your browser"
 engine: knitr
 format:
   live-html:
-    css: ../styles.css
+    css: ../../styles.css
 ---
 
-{{< include ../_extensions/r-wasm/live/_knitr.qmd >}}
+{{< include ../../_extensions/r-wasm/live/_knitr.qmd >}}
 
 This page uses WebAssembly runtimes. The first visit may take a few seconds
 while the browser downloads Python or R. Edit either cell and select

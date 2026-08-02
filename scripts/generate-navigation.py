@@ -10,6 +10,7 @@ import re
 import sys
 import tomllib
 from pathlib import Path
+from urllib.parse import quote
 
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -17,6 +18,9 @@ QUARTO_CONFIG = ROOT / "_quarto.yml"
 NAV_CONFIG = ROOT / "site-navigation.toml"
 BEGIN = "      # BEGIN AUTO-GENERATED NAVIGATION"
 END = "      # END AUTO-GENERATED NAVIGATION"
+GENERATED_DIR = ROOT / "generated-pages"
+MANIFEST = GENERATED_DIR / ".manifest.json"
+LIVE_MANIFEST = ROOT / "generated-live" / "manifest.json"
 
 
 def yaml_string(value: str) -> str:
@@ -96,7 +100,70 @@ def display_title(path: Path) -> tuple[str, bool]:
     return title or fallback, hidden
 
 
-def section_files(section: dict) -> list[tuple[Path, str]]:
+def clear_previous_generated_pages() -> None:
+    """Remove only wrapper files recorded in our previous manifest."""
+    if not MANIFEST.is_file():
+        return
+    try:
+        generated = json.loads(MANIFEST.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        generated = []
+    for relative in generated:
+        candidate = (ROOT / relative).resolve()
+        if GENERATED_DIR.resolve() in candidate.parents and candidate.suffix == ".qmd":
+            candidate.unlink(missing_ok=True)
+
+
+def write_embed_page(path: Path, title: str) -> Path:
+    """Create a QMD page that embeds a static HTML or PDF resource."""
+    source_relative = path.relative_to(ROOT)
+    wrapper_relative = Path("generated-pages") / source_relative.parent / (
+        f"{path.stem}-{path.suffix[1:].lower()}.qmd"
+    )
+    wrapper = ROOT / wrapper_relative
+    wrapper.parent.mkdir(parents=True, exist_ok=True)
+
+    output_parent = wrapper_relative.parent
+    depth = len(output_parent.parts)
+    resource_url = "../" * depth + quote(source_relative.as_posix(), safe="/")
+    file_type = path.suffix[1:].upper()
+    if path.suffix.lower() == ".pdf":
+        guidance = "Use the viewer controls to navigate, zoom, or download the PDF."
+    elif path.suffix.lower() == ".html":
+        guidance = "This is an embedded, previously rendered HTML document."
+    else:
+        guidance = "PowerPoint files are provided as downloads and open in your presentation application."
+
+    embed = ""
+    if path.suffix.lower() in {".pdf", ".html"}:
+        embed = (
+            f'<iframe class="embedded-document embedded-{path.suffix[1:].lower()}" '
+            f'src="{resource_url}" title={yaml_string(title)} loading="lazy"></iframe>'
+        )
+
+    wrapper.write_text(
+        "\n".join(
+            [
+                "---",
+                f"title: {yaml_string(title)}",
+                "format:",
+                "  html:",
+                "    toc: false",
+                "    page-layout: full",
+                "---",
+                "",
+                f"{guidance} [Open or download the original {file_type}]({resource_url}){{target=\"_blank\"}}.",
+                "",
+                embed,
+                "",
+            ]
+        ),
+        encoding="utf-8",
+    )
+    return wrapper_relative
+
+
+def section_files(section: dict) -> list[tuple[Path, str, Path]]:
     folder = ROOT / section["folder"]
     if not folder.is_dir():
         print(f"warning: navigation folder does not exist: {folder}", file=sys.stderr)
@@ -105,7 +172,7 @@ def section_files(section: dict) -> list[tuple[Path, str]]:
     iterator = folder.rglob("*") if section.get("recursive", True) else folder.glob("*")
     extensions = set(section.get("extensions", [".qmd", ".Rmd", ".rmd", ".ipynb"]))
     excluded = set(section.get("exclude", []))
-    entries: list[tuple[Path, str]] = []
+    entries: list[tuple[Path, str, Path]] = []
 
     for path in iterator:
         relative_to_folder = path.relative_to(folder).as_posix()
@@ -120,7 +187,12 @@ def section_files(section: dict) -> list[tuple[Path, str]]:
         title, hidden = display_title(path)
         title = section.get("titles", {}).get(relative_to_folder, title)
         if not hidden:
-            entries.append((path, title))
+            href = (
+                write_embed_page(path, title)
+                if path.suffix.lower() in {".html", ".pdf", ".pptx"}
+                else path.relative_to(ROOT)
+            )
+            entries.append((path, title, href))
 
     sort_mode = section.get("sort", "title")
     if sort_mode == "filename":
@@ -133,6 +205,12 @@ def section_files(section: dict) -> list[tuple[Path, str]]:
 
 
 def build_navigation(config: dict) -> str:
+    live_pages: dict[str, str] = {}
+    if LIVE_MANIFEST.is_file():
+        try:
+            live_pages = json.loads(LIVE_MANIFEST.read_text(encoding="utf-8")).get("pages", {})
+        except json.JSONDecodeError:
+            pass
     lines = [BEGIN]
     lines.extend(
         [
@@ -147,9 +225,10 @@ def build_navigation(config: dict) -> str:
             continue
         lines.append(f"      - text: {yaml_string(section['label'])}")
         lines.append("        menu:")
-        for path, title in entries:
-            href = path.relative_to(ROOT).as_posix()
-            if section.get("show_format", False) and path.suffix.lower() in {".html", ".pdf"}:
+        for path, title, href_path in entries:
+            source_href = path.relative_to(ROOT).as_posix()
+            href = live_pages.get(source_href, href_path.as_posix())
+            if section.get("show_format", False) and path.suffix.lower() in {".html", ".pdf", ".pptx"}:
                 title = f"{title} ({path.suffix[1:].upper()})"
             lines.append(f"          - href: {yaml_string(href)}")
             lines.append(f"            text: {yaml_string(title)}")
@@ -164,11 +243,18 @@ def main() -> int:
     args = parser.parse_args()
 
     config = tomllib.loads(NAV_CONFIG.read_text(encoding="utf-8"))
+    clear_previous_generated_pages()
     current = QUARTO_CONFIG.read_text(encoding="utf-8")
     if BEGIN not in current or END not in current:
         raise SystemExit(f"navigation markers are missing from {QUARTO_CONFIG.name}")
 
     generated = build_navigation(config)
+    generated_wrappers = sorted(
+        path.relative_to(ROOT).as_posix()
+        for path in GENERATED_DIR.rglob("*.qmd")
+    )
+    GENERATED_DIR.mkdir(parents=True, exist_ok=True)
+    MANIFEST.write_text(json.dumps(generated_wrappers, indent=2) + "\n", encoding="utf-8")
     updated = re.sub(
         rf"{re.escape(BEGIN)}.*?{re.escape(END)}",
         lambda _match: generated,

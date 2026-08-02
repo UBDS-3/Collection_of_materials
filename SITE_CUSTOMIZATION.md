@@ -16,9 +16,9 @@ you can change one without rewriting the others.
 
 ## Dynamic navigation tabs
 
-The `Materials` and `Slides` menus are generated from their folders before
-every local and GitHub Actions render. Configure the sections in
-`site-navigation.toml`; do not edit the generated block in `_quarto.yml`.
+The six course-area menus are generated from their respective `content/`
+folders before every local and GitHub Actions render. Configure the sections
+in `site-navigation.toml`; do not edit the generated block in `_quarto.yml`.
 
 The recursive glob patterns under `_quarto.yml` → `project.render` render all
 supported documents in those folders. You only need to change them when adding
@@ -29,10 +29,10 @@ A section looks like this:
 ```toml
 [[section]]
 label = "Lectures"
-folder = "lectures"
+folder = "content/lectures"
 recursive = true
 sort = "title"
-extensions = [".qmd", ".Rmd", ".rmd", ".ipynb", ".html", ".pdf"]
+extensions = [".qmd", ".Rmd", ".rmd", ".ipynb", ".html", ".pdf", ".pptx"]
 show_format = true
 exclude = []
 
@@ -49,11 +49,30 @@ embedded titles use a cleaned-up filename. Set `show_format = true` to append
 Use the optional `[section.titles]` table to override a generated name without
 renaming the file. Paths in that table are relative to the section folder.
 
-Quarto renders `.qmd`, `.Rmd`, and `.ipynb` sources. Existing `.html` and `.pdf`
-files are copied unchanged through `project.resources`, so their internal
-formatting remains intact. If an HTML export has a companion directory such as
-`lesson_files/`, keep it beside the HTML file; the `*_files` resource pattern
-copies it too.
+Quarto renders `.qmd`, `.Rmd`, and `.ipynb` sources. Existing `.html`, `.pdf`,
+and `.pptx` files are copied unchanged through `project.resources`. The navigation script
+also creates ignored QMD wrapper pages under `generated-pages/`, allowing the
+files to appear inline inside the main website layout. Never edit those wrapper
+pages directly because they are regenerated before every build.
+
+If an HTML export has a companion directory such as `lesson_files/`, keep it
+beside the HTML file; the `*_files` resource pattern copies it too.
+
+Embedding an existing HTML preserves JavaScript already present in that HTML.
+It does not turn static code listings back into executable cells. Browser-run
+cells require source documents using `{pyodide}` or `{webr}`.
+
+## Automatic live-code conversion
+
+`scripts/generate-live-pages.py` converts compatible Python and R cells from
+QMD, Rmd, and IPYNB sources without changing the originals. Generated pages
+are placed under `generated-live/` and preferred automatically by the navbar.
+
+The conversion is intentionally best-effort. Inspect
+`generated-live/manifest.json` after rendering. Its `warnings` array flags
+constructs such as shell commands, absolute local paths, GPU libraries, and
+packages that commonly need native system services. A page can still require
+manual edits even when its syntax was converted successfully.
 
 To keep a document rendered but hide it from navigation, add this to its YAML:
 
@@ -92,7 +111,7 @@ Reusable classes are defined in `styles.css`. Use them in any `.qmd` page:
 ::: {.site-card}
 ### Notebook title
 
-Short description and [open notebook](materials/example.ipynb).
+Short description and [open notebook](content/python-basic/example.ipynb).
 :::
 
 ::: {.site-highlight}

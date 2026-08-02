@@ -1,4 +1,6 @@
 /_site/
+/generated-pages/
+/generated-live/
 /.quarto/
 /_freeze/
 /.cache/
@@ -11,4 +13,5 @@
 .RData
 
 **/*.quarto_ipynb
+**/__pycache__/
 ./quarto-1.9.38-linux-amd64.deb
