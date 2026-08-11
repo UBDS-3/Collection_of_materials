@@ -14,10 +14,30 @@ project:
   # Static documents are copied unchanged and displayed through generated QMD
   # wrapper pages. Do not edit generated-pages/ by hand.
   resources:
+    - "assets/site/**"
     - "content/**/*.html"
     - "content/**/*.pdf"
     - "content/**/*.pptx"
+    - "content/**/*.R"
     - "content/**/*_files/**"
+    # Archived course sites are linked from overview pages, but their
+    # underscore-prefixed folders are not added as hundreds of navbar items.
+    - "content/**/_course-material/**"
+    # Small datasets stored beside teaching material are published unchanged.
+    # See DATASETS.md for the supported layout and browser-loading examples.
+    - "content/**/data/**"
+    # Data files kept beside the Python notebooks (rather than in data/).
+    - "content/python-basic/**/*.csv"
+    - "content/python-basic/**/*.tsv"
+    - "content/python-basic/**/*.gff"
+    - "content/python-basic/**/*.fasta"
+    - "content/python-basic/**/*.py"
+    # Small tabular inputs used by advanced lessons. The large MRI image tree
+    # and macOS metadata files are intentionally not copied as blanket resources.
+    - "content/advanced/Neural Networks/1-perceptron/sleep_disorder_data.csv"
+    - "content/advanced/Neural Networks/2-neural-networks/breast-cancer.csv"
+    - "content/advanced/Neural Networks/2-neural-networks/heart.csv"
+    - "datasets/**"
 
 website:
   title: "Collection of materials"
@@ -36,32 +56,90 @@ website:
         text: "Home"
       - text: "R basics"
         menu:
-          - href: "generated-live/content/r-basic/rmarkdown-example.qmd"
-            text: "R Markdown example"
+          - href: "content/r-basic/basic-r-2026/_course-material/index.html"
+            text: "Basic R course (Sandpaper)"
+          - href: "generated-pages/content/r-basic/basic-r-2026/first-rmarkdown-report-html.qmd"
+            text: "First R Markdown report (HTML)"
+          - href: "content/r-basic/basic-r-2026/index.qmd"
+            text: "Introduction to R (2026)"
+          - href: "content/r-basic/basic-r-2026/browser-exercises.qmd"
+            text: "Introduction to R — browser exercises"
+          - href: "generated-pages/content/r-basic/basic-r-2026/project-html.qmd"
+            text: "Mini-project questions (HTML)"
+          - href: "generated-live/content/r-basic/basic-r-2026/S05-onco.qmd"
+            text: "R basics: oncology data practical"
+          - href: "generated-live/content/r-basic/basic-r-2026/S01-start-data.qmd"
+            text: "R basics: reading and exploring data"
+          - href: "generated-live/content/r-basic/basic-r-2026/S04-se.qmd"
+            text: "R basics: SummarizedExperiment"
+          - href: "generated-live/content/r-basic/basic-r-2026/S02-tidy.qmd"
+            text: "R basics: tidy data with dplyr"
+          - href: "generated-live/content/r-basic/basic-r-2026/S00-first.qmd"
+            text: "R basics: variables, functions, vectors, and missing values"
+          - href: "generated-live/content/r-basic/basic-r-2026/S03-ggplot.qmd"
+            text: "R basics: visualisation with ggplot2"
           - href: "generated-pages/content/r-basic/tidy-data-html.qmd"
             text: "Tidy Data (HTML)"
       - text: "Python basics"
         menu:
-          - href: "generated-live/content/python-basic/notebook-example.qmd"
-            text: "Jupyter notebook example"
-          - href: "generated-live/content/python-basic/quarto-example.qmd"
-            text: "Quarto example"
+          - href: "generated-live/content/python-basic/day2/Chapter 2.qmd"
+            text: "Chapter 2: Lists, Dictionaries and Sets"
+          - href: "generated-live/content/python-basic/day2/Chapter 3.qmd"
+            text: "Chapter 3: Loops and conditions"
+          - href: "generated-live/content/python-basic/day2/Chapter 4.qmd"
+            text: "Chapter 4: Functions, Numpy and Biopython"
+          - href: "generated-live/content/python-basic/day3/Day_3.qmd"
+            text: "Day 3 — Basic Python"
+          - href: "generated-live/content/python-basic/day5/Day 5.qmd"
+            text: "Day 5 — Basic Python"
+          - href: "generated-live/content/python-basic/day3/real_alignment/notebooks/dna_translation_alignment.qmd"
+            text: "DNA Translation and Pairwise Identity Workflow"
+          - href: "generated-live/content/python-basic/day4/Intro_to_Pandas_Matplotlib.qmd"
+            text: "Intro to Pandas and Matplotlib"
+          - href: "generated-pages/content/python-basic/day4/Intro_to_Pandas_Matplotlib-pptx.qmd"
+            text: "Intro to Pandas and Matplotlib (PPTX)"
+          - href: "generated-pages/content/python-basic/Python Basics cheatsheet-pptx.qmd"
+            text: "Python Basics Cheatsheet (PPTX)"
+          - href: "generated-live/content/python-basic/day4/querying_gff.qmd"
+            text: "Querying GFF"
+          - href: "generated-live/content/python-basic/day1/python_basic_day_1.qmd"
+            text: "Simple Data Types / Прості типи даних"
       - text: "Advanced"
         menu:
-          - href: "content/advanced/live-code.qmd"
-            text: "Run code in your browser"
+          - href: "generated-live/content/advanced/Neural Networks/2-neural-networks/1-neural-networks.qmd"
+            text: "1 Neural Networks"
+          - href: "generated-live/content/advanced/Neural Networks/1-perceptron/1-perceptron-from-scratch.qmd"
+            text: "1 Perceptron From Scratch"
+          - href: "generated-live/content/advanced/Neural Networks/1-perceptron/2-MLP-XOR-problem-solutions.qmd"
+            text: "2 Mlp Xor Problem Solutions"
+          - href: "generated-live/content/advanced/Neural Networks/3-convolutional-neural-networks/3-convolutional-neural-networks.qmd"
+            text: "3 Convolutional Neural Networks"
+          - href: "generated-live/content/advanced/Neural Networks/2-neural-networks/2-fashion-MNIST.qmd"
+            text: "Digital image classifier"
+          - href: "generated-live/content/advanced/Neural Networks/4-transformers.qmd"
+            text: "Transformers with PyTorch"
       - text: "Lectures"
         menu:
           - href: "generated-pages/content/lectures/slides-pdf.qmd"
             text: "BashLand Course (PDF)"
-          - href: "content/lectures/course-slides.qmd"
-            text: "Example course slides"
           - href: "generated-pages/content/lectures/260713-BDS3_intro_to_modern_bio_data_Helena_Crowell-pdf.qmd"
             text: "Introduction to Modern Biological Data — Helena Crowell (PDF)"
+          - href: "generated-pages/content/lectures/machine_learning-pdf.qmd"
+            text: "Machine Learning (PDF)"
+          - href: "generated-pages/content/lectures/neural_networks-pdf.qmd"
+            text: "Neural Networks (PDF)"
+          - href: "generated-pages/content/lectures/tidy-data-html.qmd"
+            text: "Tidy Data (HTML)"
       - text: "Research highlights"
         menu:
-          - href: "content/research-highlights/index.qmd"
-            text: "Research highlights overview"
+          - href: "generated-pages/content/research-highlights/260713-BDS3_Julia_Ruehle_transcription_factors-pptx.qmd"
+            text: "260713 Bds3 Julia Ruehle Transcription Factors (PPTX)"
+          - href: "generated-pages/content/research-highlights/260714-BDS3_Helena_Crowell_spatial-pdf.qmd"
+            text: "260714 Bds3 Helena Crowell Spatial (PDF)"
+          - href: "generated-pages/content/research-highlights/Perturbation assays-pdf.qmd"
+            text: "Perturbation Assays (PDF)"
+          - href: "generated-pages/content/research-highlights/USBRG-pdf.qmd"
+            text: "Usbrg (PDF)"
       - text: "Post-school materials"
         menu:
           - href: "content/post-school-materials/index.qmd"
@@ -79,9 +157,11 @@ format:
   html:
     theme: cosmo
     css: styles.css
+    include-before-body: _includes/site-corner-logos.html
     toc: true
     code-copy: true
     code-fold: show
 
 execute:
   enabled: true
+  error: true

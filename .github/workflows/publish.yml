@@ -45,6 +45,9 @@ jobs:
         with:
           tinytex: true
 
+      - name: Validate publishable datasets
+        run: python scripts/validate-datasets.py
+
       - name: Generate browser-executable pages
         run: python scripts/generate-live-pages.py
 

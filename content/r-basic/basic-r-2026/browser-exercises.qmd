@@ -1,0 +1,66 @@
+---
+title: "Introduction to R — browser exercises"
+engine: knitr
+format:
+  live-html:
+    css: ../../../styles.css
+---
+
+{{< include ../../../_extensions/r-wasm/live/_knitr.qmd >}}
+
+These short activities cover the base-R parts of day 1. Edit a cell and select
+**Run Code**. They execute in your browser and do not need RStudio.
+
+## Values and vectors
+
+```{webr}
+mass <- 47.5
+age <- 122
+mass_index <- mass / age
+
+mass_index
+```
+
+```{webr}
+molecules <- c("dna", "rna", "protein")
+molecules2 <- c(molecules, "metabolites")
+
+molecules2
+```
+
+## Selecting values
+
+```{webr}
+weights <- c(21, 34, 39, 54, 55)
+
+# Change 50 to try a different definition of a heavy rat.
+heavy_weights <- weights[weights >= 50]
+mean(heavy_weights)
+```
+
+```{webr}
+molecules <- c("dna", "rna", "protein", "dna", "protein")
+nucleic_acids <- c("dna", "rna")
+
+molecules[molecules %in% nucleic_acids]
+```
+
+## Missing values
+
+```{webr}
+heights <- c(2, 5, 6, 2, NA, 4)
+
+mean(heights, na.rm = TRUE)
+```
+
+## Small data frame
+
+```{webr}
+samples <- data.frame(
+  sample = c("A", "B", "C"),
+  expression = c(12.3, 9.8, 14.1)
+)
+
+samples
+mean(samples$expression)
+```

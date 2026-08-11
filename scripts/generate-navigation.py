@@ -77,13 +77,17 @@ def notebook_metadata(path: Path) -> tuple[str | None, bool]:
     if quarto.get("title"):
         return str(quarto["title"]), False
 
+    first_heading = None
     for cell in notebook.get("cells", []):
         if cell.get("cell_type") != "markdown":
             continue
         source = "".join(cell.get("source", []))
         match = re.search(r"(?m)^#\s+(.+?)\s*$", source)
         if match:
-            return match.group(1), False
+            first_heading = match.group(1).strip()
+            break
+    if first_heading and first_heading.casefold() not in {"ubds 2026: basic python"}:
+        return first_heading, False
     return None, False
 
 
@@ -96,7 +100,14 @@ def display_title(path: Path) -> tuple[str, bool]:
         title, hidden = None, False
     else:
         title, hidden = text_metadata(path)
-    fallback = path.stem.replace("-", " ").replace("_", " ").strip().title()
+    stem = path.stem.replace("-", " ").replace("_", " ").strip()
+    fallback = stem.title()
+    if re.fullmatch(r"day\s+\d+", stem, flags=re.IGNORECASE):
+        fallback = f"{fallback} — Basic Python"
+    elif stem.casefold() == "intro to pandas matplotlib":
+        fallback = "Intro to Pandas and Matplotlib"
+    elif stem.casefold() == "querying gff":
+        fallback = "Querying GFF"
     return title or fallback, hidden
 
 
@@ -225,6 +236,9 @@ def build_navigation(config: dict) -> str:
             continue
         lines.append(f"      - text: {yaml_string(section['label'])}")
         lines.append("        menu:")
+        for link in section.get("links", []):
+            lines.append(f"          - href: {yaml_string(link['href'])}")
+            lines.append(f"            text: {yaml_string(link['text'])}")
         for path, title, href_path in entries:
             source_href = path.relative_to(ROOT).as_posix()
             href = live_pages.get(source_href, href_path.as_posix())

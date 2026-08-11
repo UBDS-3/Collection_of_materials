@@ -54,6 +54,76 @@ h1, h2, h3, h4, h5, h6 {
   text-underline-offset: 0.3rem;
 }
 
+/* Institutional marks shown in the upper corners of every Quarto page. */
+.site-corner-logos {
+  position: fixed;
+  inset: 0;
+  z-index: 1030;
+  pointer-events: none;
+  --snake-width: clamp(5.5rem, 10vw, 8.5rem);
+  --snake-inset: 0.75rem;
+  --snake-top: 4.1rem;
+  --snake-bottom: calc(100% - 6.3rem);
+}
+
+.site-corner-logos::before,
+.site-corner-logos::after {
+  position: absolute;
+  top: 4.1rem;
+  display: block;
+  content: "";
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  filter: drop-shadow(0 1px 1px rgb(0 0 0 / 15%));
+}
+
+.site-corner-logos::before {
+  left: 0.75rem;
+  width: clamp(3.5rem, 6vw, 5.25rem);
+  aspect-ratio: 1;
+  background-image: url("assets/site/school-logo.png");
+}
+
+.site-corner-logos::after {
+  left: calc(100% - var(--snake-width) - var(--snake-inset));
+  width: var(--snake-width);
+  aspect-ratio: 472 / 281;
+  background-image: url("assets/site/uzh.png");
+  /* Paused for now; restore `site-snake-border 28s linear infinite` to re-enable. */
+  animation: none;
+  transform-origin: center;
+  will-change: left, top, transform;
+}
+
+/* Move the UZH mark clockwise around the page edge, like a slithering snake. */
+@keyframes site-snake-border {
+  0%,
+  100% {
+    left: calc(100% - var(--snake-width) - var(--snake-inset));
+    top: var(--snake-top);
+    transform: rotate(0deg);
+  }
+
+  25% {
+    left: calc(100% - var(--snake-width) - var(--snake-inset));
+    top: var(--snake-bottom);
+    transform: rotate(90deg);
+  }
+
+  50% {
+    left: var(--snake-inset);
+    top: var(--snake-bottom);
+    transform: rotate(180deg);
+  }
+
+  75% {
+    left: var(--snake-inset);
+    top: var(--snake-top);
+    transform: rotate(270deg);
+  }
+}
+
 /* Reusable content card: ::: {.site-card} ... ::: */
 .site-card {
   height: 100%;
@@ -106,8 +176,38 @@ h1, h2, h3, h4, h5, h6 {
     --site-radius: 0.45rem;
   }
 
+  .site-corner-logos {
+    --snake-width: 5.25rem;
+    --snake-inset: 0.35rem;
+    --snake-top: 3.8rem;
+    --snake-bottom: calc(100% - 4.25rem);
+  }
+
   .site-card,
   .site-highlight {
     padding: 1rem;
+  }
+
+  .site-corner-logos::before,
+  .site-corner-logos::after {
+    top: 3.8rem;
+  }
+
+  .site-corner-logos::before {
+    left: 0.35rem;
+    width: 3.25rem;
+  }
+
+  .site-corner-logos::after {
+    width: 5.25rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-corner-logos::after {
+    animation: none;
+    left: calc(100% - var(--snake-width) - var(--snake-inset));
+    top: var(--snake-top);
+    transform: none;
   }
 }

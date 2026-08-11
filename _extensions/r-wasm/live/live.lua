@@ -1,4 +1,18 @@
-local tinyyaml = require "resources/tinyyaml"
+-- Lua's package.path is not guaranteed to include this extension directory
+-- (notably when Quarto is launched from PowerShell on Windows). Load the
+-- bundled parser relative to this filter instead of the process working
+-- directory.
+local filter_path = PANDOC_SCRIPT_FILE
+if not filter_path then
+  local source = debug.getinfo(1, "S").source
+  filter_path = source:sub(1, 1) == "@" and source:sub(2) or source
+end
+local filter_dir = filter_path:match("^(.*[/\\])") or ""
+local tinyyaml = dofile(filter_dir .. "resources/tinyyaml.lua")
+
+local function extension_path(relative_path)
+  return filter_dir .. relative_path
+end
 
 local cell_options = {
   webr = { eval = true },
@@ -172,7 +186,7 @@ function PyodideCodeBlock(code)
   block_id = block_id + 1
 
   function append_ojs_template(template, template_vars)
-    local file = io.open(quarto.utils.resolve_path("templates/" .. template), "r")
+    local file = io.open(extension_path("templates/" .. template), "r")
     assert(file)
     local content = file:read("*a")
     for k, v in pairs(template_vars) do
@@ -271,8 +285,14 @@ function PyodideCodeBlock(code)
 
   append_ojs_template(ojs_source, ojs_vars)
 
+  -- Keep the source visible if the browser runtime is delayed, blocked, or
+  -- unavailable. OJS replaces this fallback when the live editor mounts.
+  local fallback = pandoc.CodeBlock(
+    block.code,
+    pandoc.Attr("", { "live-code-fallback", "python", "cell-code" })
+  )
   return pandoc.Div({
-    pandoc.Div({}, pandoc.Attr("pyodide-" .. block_id, { 'exercise-cell' })),
+    pandoc.Div({ fallback }, pandoc.Attr("pyodide-" .. block_id, { 'exercise-cell' })),
     pandoc.RawBlock(
       "html",
       "<script type=\"pyodide-" .. block_id .. "-contents\">\n" ..
@@ -285,7 +305,7 @@ function WebRCodeBlock(code)
   block_id = block_id + 1
 
   function append_ojs_template(template, template_vars)
-    local file = io.open(quarto.utils.resolve_path("templates/" .. template), "r")
+    local file = io.open(extension_path("templates/" .. template), "r")
     assert(file)
     local content = file:read("*a")
     for k, v in pairs(template_vars) do
@@ -387,8 +407,14 @@ function WebRCodeBlock(code)
   -- Render any HTMLWidgets after HTML output has been added to the DOM
   HTMLWidget(block_id)
 
+  -- Keep the source visible if the browser runtime is delayed, blocked, or
+  -- unavailable. OJS replaces this fallback when the live editor mounts.
+  local fallback = pandoc.CodeBlock(
+    block.code,
+    pandoc.Attr("", { "live-code-fallback", "r", "cell-code" })
+  )
   return pandoc.Div({
-    pandoc.Div({}, pandoc.Attr("webr-" .. block_id, { 'exercise-cell' })),
+    pandoc.Div({ fallback }, pandoc.Attr("webr-" .. block_id, { 'exercise-cell' })),
     pandoc.RawBlock(
       "html",
       "<script type=\"webr-" .. block_id .. "-contents\">\n" ..
@@ -401,7 +427,7 @@ function InterpolatedBlock(block, language)
   block_id = block_id + 1
 
   -- Reactively render OJS variables in codeblocks
-  file = io.open(quarto.utils.resolve_path("templates/interpolate.ojs"), "r")
+  file = io.open(extension_path("templates/interpolate.ojs"), "r")
   assert(file)
   content = file:read("*a")
 
@@ -461,7 +487,7 @@ function CodeBlock(code)
 end
 
 function HTMLWidget(block_id)
-  local file = io.open(quarto.utils.resolve_path("templates/webr-widget.ojs"), "r")
+  local file = io.open(extension_path("templates/webr-widget.ojs"), "r")
   assert(file)
   content = file:read("*a")
 
@@ -515,7 +541,7 @@ function setupPyodide(doc)
   local pyodide = doc.meta.pyodide or {}
   local packages = pyodide.packages or {}
 
-  local file = io.open(quarto.utils.resolve_path("templates/pyodide-setup.ojs"), "r")
+  local file = io.open(extension_path("templates/pyodide-setup.ojs"), "r")
   assert(file)
   local content = file:read("*a")
 
@@ -562,7 +588,7 @@ function setupWebR(doc)
   local packages = webr.packages or {}
   local repos = webr.repos or {}
 
-  local file = io.open(quarto.utils.resolve_path("templates/webr-setup.ojs"), "r")
+  local file = io.open(extension_path("templates/webr-setup.ojs"), "r")
   assert(file)
   local content = file:read("*a")
 

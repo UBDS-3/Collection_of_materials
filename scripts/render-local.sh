@@ -23,6 +23,7 @@ export JUPYTER_RUNTIME_DIR="$PROJECT_DIR/.tmp/jupyter-runtime"
 export MPLCONFIGDIR="$PROJECT_DIR/.cache/matplotlib"
 export QUARTO_PYTHON="$PROJECT_DIR/.venv/bin/python"
 
+.venv/bin/python scripts/validate-datasets.py
 .venv/bin/python scripts/generate-live-pages.py
 .venv/bin/python scripts/generate-navigation.py
 

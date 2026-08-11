@@ -1,0 +1,14 @@
+# Browser execution is opt-in. Add a source notebook path to `include` only
+# after checking its imports, data paths, and file-writing behavior in Pyodide.
+default = false
+
+include = [
+  "content/python-basic/day1/python_basic_day_1.ipynb",
+  "content/python-basic/day2/Chapter 2.ipynb",
+  "content/python-basic/day2/Chapter 3.ipynb",
+  "content/python-basic/day4/Intro_to_Pandas_Matplotlib.ipynb",
+  
+]
+
+# Use `exclude` for a temporary opt-out without changing the include list.
+exclude = []

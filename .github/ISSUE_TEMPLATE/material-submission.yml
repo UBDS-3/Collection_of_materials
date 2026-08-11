@@ -1,0 +1,51 @@
+name: Material submission
+description: Submit teaching material without cloning the repository
+title: "Material submission: "
+labels:
+  - material-submission
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Attach small files by dragging them into the description, or provide a download link.
+        A maintainer will place the material in a branch and open a pull request.
+  - type: input
+    id: title
+    attributes:
+      label: Material title
+      placeholder: e.g. Introduction to RNA-seq
+    validations:
+      required: true
+  - type: dropdown
+    id: section
+    attributes:
+      label: Site section
+      options:
+        - R basics
+        - Python basics
+        - Advanced
+        - Lectures
+        - Research highlights
+        - Post-school materials
+    validations:
+      required: true
+  - type: textarea
+    id: files
+    attributes:
+      label: Files or download links
+      description: Include notebook/slide filenames, links, and any required datasets.
+      placeholder: Drag files here or paste links.
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Rendering notes
+      description: Mention required R/Python packages, browser execution expectations, or known limitations.
+  - type: checkboxes
+    id: rights
+    attributes:
+      label: Redistribution
+      options:
+        - label: I have permission to share this material and its datasets.
+          required: true

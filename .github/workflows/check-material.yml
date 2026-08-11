@@ -1,0 +1,41 @@
+name: Check material submission
+
+on:
+  pull_request:
+    paths:
+      - "content/**"
+      - "datasets/**"
+      - "browser-executable.toml"
+      - "site-navigation.toml"
+      - "scripts/**"
+      - "_quarto.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out pull request
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install generation dependency
+        run: python -m pip install "PyYAML>=6,<7"
+
+      - name: Check publishable datasets
+        run: python scripts/validate-datasets.py
+
+      - name: Check browser-copy generation
+        run: python scripts/generate-live-pages.py
+
+      - name: Check navigation generation
+        run: python scripts/generate-navigation.py
+
+      - name: Check repository whitespace
+        run: git diff --check

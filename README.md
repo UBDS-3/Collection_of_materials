@@ -5,6 +5,11 @@ and `.ipynb` sources as a GitHub Pages website and builds slides as HTML, PDF,
 and PowerPoint (`.pptx`). Quarto Live provides browser-executable Python and R
 exercises using Pyodide and WebR.
 
+People who contribute material do not need to clone the repository. Follow
+[`CONTRIBUTING.md`](CONTRIBUTING.md) to upload through GitHub's browser and open
+a pull request; the existing GitHub Actions workflow publishes merged material
+automatically.
+
 ## Repository layout
 
 ```text
@@ -59,6 +64,16 @@ To build exactly what GitHub Pages will publish:
 ```bash
 ./scripts/render-local.sh
 ```
+
+On Windows PowerShell, use the equivalent script:
+
+```powershell
+.\scripts\render-local.ps1
+```
+
+If PowerShell blocks local scripts for the current session, run
+`Set-ExecutionPolicy -Scope Process Bypass` first. Arguments pass through to
+Quarto, for example `.\scripts\render-local.ps1 content/r-basic/index.qmd`.
 
 The site is written to `_site/`. The example slide deck produces:
 
@@ -155,3 +170,27 @@ Then use a `pyodide` block for Python or a `webr` block for R. See
 `content/advanced/live-code.qmd` for complete examples. Browser runtimes cannot use
 arbitrary native Python or R packages; packages must have WebAssembly-compatible
 builds.
+
+### Datasets used by notebooks
+
+Commit small, redistributable datasets either in a shared `datasets/` directory
+or in a `data/` directory beside the lesson that uses them. Both locations are
+copied to GitHub Pages automatically and checked during local and CI builds.
+The default limits are 20 MiB per file and 100 MiB in total. See
+[`DATASETS.md`](DATASETS.md) for the folder convention, changing limits, and the
+HTTP-fetch pattern required by browser-executable Python/R copies.
+Browser execution of notebooks is opt-in. See [BROWSER_EXECUTION.md](BROWSER_EXECUTION.md)
+and [browser-executable.toml](browser-executable.toml) before adding a notebook
+to the Pyodide/WebR allowlist.
+
+R lesson scripts in `content/r-basic/basic-r-2026/S*.R` are kept as source and
+also represented as notebooks. To regenerate those notebooks after editing a
+script, run `python scripts/convert-r-scripts.py`.
+
+### Sandpaper course pages
+
+The rendered Sandpaper site from `Basic_R_2026/material/` is preserved under
+`content/r-basic/basic-r-2026/_course-material/` and linked from the **R basics**
+menu as **Basic R course (Sandpaper)**. It is published as a self-contained
+static subsite; regenerate it with Sandpaper in the original repository, then
+replace that directory when the course materials change.

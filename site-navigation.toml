@@ -10,10 +10,16 @@ recursive = true
 sort = "title"
 extensions = [".qmd", ".Rmd", ".rmd", ".ipynb", ".html", ".pdf", ".pptx"]
 show_format = true
-exclude = []
+exclude = ["basic-r-2026/figs/exp_time_sex.pdf"]
 
 [section.titles]
 "tidy-data.html" = "Tidy Data"
+"basic-r-2026/first-rmarkdown-report.html" = "First R Markdown report"
+"basic-r-2026/project.html" = "Mini-project questions"
+
+[[section.links]]
+href = "content/r-basic/basic-r-2026/_course-material/index.html"
+text = "Basic R course (Sandpaper)"
 
 [[section]]
 label = "Python basics"
