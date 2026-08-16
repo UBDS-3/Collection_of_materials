@@ -8,12 +8,9 @@ format:
 
 {{< include _extensions/r-wasm/live/_knitr.qmd >}}
 
-This site collects course notes, practicals, notebooks, and presentations in
-one place. The same repository accepts Quarto, R Markdown, and Jupyter source
-files.
+This site collects course notes, practicals, notebooks, and presentations for Ukrainian Biological Data Scince Summer School in one place to be used during and after school. The same repository accepts Quarto, R Markdown, and Jupyter source files. 
 
-## Try code on this page
-
+## Some notebooks contains executable code chunks 
 These cells execute entirely inside your browser. Edit the code and select
 **Run Code**. The runtime can take a few seconds to download on first use.
 
@@ -43,7 +40,7 @@ Core R syntax, tidy data, and introductory analysis.
 ::: {.g-col-12 .g-col-md-4}
 ### Python basics
 
-Python notebooks, pandas, visualization, and reproducible analysis.
+Python notebooks, pandas, visualization, and reproducible analysis. 
 :::
 
 ::: {.g-col-12 .g-col-md-4}
