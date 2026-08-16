@@ -1,0 +1,82 @@
+---
+title: "Recommended post-school resources"
+subtitle: "A curated starting point for continued learning in bioinformatics, data science, and research."
+format:
+  html:
+    toc: true
+    toc-depth: 2
+---
+
+::: {.site-highlight}
+These resources are useful after the summer school for building practical
+skills, revisiting core concepts, and finding opportunities for further study.
+Start with the section closest to your current interests, then follow the
+links at your own pace.
+:::
+
+## Bioinformatics and computational biology
+
+### Bioconductor
+
+The [Bioconductor training and education
+resources](https://training.bioconductor.org/) include courses and teaching
+materials for bioinformatics in R. You may also find these useful:
+
+- [Bioconductor books](https://bioconductor.org/help/bioconductor-books/)
+- [Previous workshops and recorded materials](https://bioconductor.org/help/)
+
+### Practice problems
+
+- [Rosalind](https://rosalind.info/problems/list-view/) - programming and
+  algorithms problems designed around biology.
+- [Software Carpentry lessons](https://software-carpentry.org/lessons/) -
+  lessons on Git, version control, Python, the Unix shell, and related tools.
+
+## Image analysis
+
+- [Microscopy image analysis course](https://github.com/wisstock/BioInUA_2025_img_analysis)
+  - course materials from BioInUA 2025.
+
+## Data science and machine learning
+
+### Practice and online courses
+
+- [Kaggle competitions](https://www.kaggle.com/competitions) - open data
+  science problems and competitions.
+- [Linux Foundation training portal](https://trainingportal.linuxfoundation.org/learn/dashboard)
+  - courses covering Git, the Bash shell, and general IT topics.
+- [Git Mastery playground](https://gitmastery.me/intro/?stage=Intro&level=1)
+  - an interactive introduction to Git.
+- [Hugging Face courses](https://huggingface.co/learn) - courses on modern AI
+  and machine-learning models; some may be free for students in Ukraine.
+
+### Books
+
+- **Introduction to Data Science** - R. Irizarry (Chapman & Hall/CRC, 2024,
+  ISBN: 9781032116556). Covers summary statistics, probability, statistical
+  inference, linear models, high-dimensional data, and machine learning with
+  applied case studies.
+- **An Introduction to Statistical Learning** - G. James, D. Witten,
+  T. Hastie, and R. Tibshirani (Springer, 2013,
+  ISBN: 978-0-387-84858-7). Introduces regression, classification, resampling,
+  and unsupervised learning through practical examples.
+- **Modern Statistics for Modern Biology** - S. Holmes and W. Huber
+  (Cambridge University Press, 2019, ISBN: 9781108705295). Introduces
+  statistical thinking and computational methods for modern biological data.
+- **Deep Learning with Python** - F. Chollet (Manning Publications, 2021,
+  ISBN: 9781617296864). Provides a practical introduction to deep learning,
+  including modern architectures such as transformers and diffusion models.
+
+### Additional videos and tutorials
+
+- [Video introduction to large language models](https://www.youtube.com/watch?v=jkrNMKz9pWU)
+- [Great Youtube channel on statistics and ML](https://www.youtube.com/@statquest)
+
+
+## Internships and funding
+
+For students looking for funded research internships abroad, the
+[Molecular Biology School summer internship
+program](https://molbioschool.org/en/school/news/summer-internships/) offers
+funding for life-science research internships worldwide for up to three months
+in a laboratory of the student's choice.
